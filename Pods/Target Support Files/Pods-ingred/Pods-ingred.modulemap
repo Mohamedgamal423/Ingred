@@ -1,0 +1,6 @@
+framework module Pods_ingred {
+  umbrella header "Pods-ingred-umbrella.h"
+
+  export *
+  module * { export * }
+}
