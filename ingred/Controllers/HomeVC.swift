@@ -14,6 +14,9 @@ class HomeVC: UIViewController {
     
     var Featuredrecipes = [Recipe]()
     var Latestrecipes = [Recipe]()
+    var seaarr = [Recipe]()
+    var searchcon = UISearchController(searchResultsController: nil)
+    var activity: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,33 +30,40 @@ class HomeVC: UIViewController {
         let headerview = UINib(nibName: "HeaderView", bundle: nil)
         HomeTable.register(headerview, forHeaderFooterViewReuseIdentifier: "header")
         navigationItem.backBarButtonItem = UIBarButtonItem(image: UIImage(named: "arrow.png"), style: .plain, target: nil, action: nil)
-        
-        
     }
-    override func viewDidAppear(_ animated: Bool) {
-        Alamofire.getrecipes(forcategory: "dinner") { (success) in
-            if success {
-                Alamofire.downloadimages { (downloaded) in
-                    if downloaded {
-                        Alamofire.addimagestorecip()
-                        //print(Alamofire.RecipesArr.count)
-                        let x = Alamofire.FeatlatestRecipesArr()
-                        self.Featuredrecipes = x.0
-                        self.Latestrecipes = x.1
-                        self.HomeTable.reloadData()
-                        
-                        
-                        
-                    }
-                }
-            }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        showactivity()
+        Alamofirec.getrecipes(forcategory: "dinner") { (recipes) in
+            let x = Alamofirec.FeatlatestRecipesArr(Recipes: recipes)
+            self.Featuredrecipes = x.0
+            self.Latestrecipes = x.1
+            self.HomeTable.reloadData()
+            self.activity.stopAnimating()
         }
+    }
+    func showactivity() {
+        activity = UIActivityIndicatorView(style: .large)
+        activity.center = view.center
+        self.view.addSubview(activity)
+        activity.startAnimating()
     }
     func defaultsetup() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Notifications.png"), style: .plain, target: nil, action: nil)
         navigationController?.makenavbarinvisible()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Search.png"), style: .plain, target: nil, action: nil)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Search.png"), style: .plain, target: self, action: #selector(presentsearchbar))
         navigationItem.title = "INGRED"
+    }
+    @objc func presentsearchbar() {
+        
+        
+        searchcon.searchResultsUpdater = self
+        searchcon.searchBar.delegate = self
+        searchcon.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController = searchcon
+        searchcon.hidesNavigationBarDuringPresentation = true
+        searchcon.definesPresentationContext = true
+        present(searchcon, animated: true, completion: nil)
     }
 }
 extension HomeVC: UITableViewDataSource, UITableViewDelegate {
@@ -64,14 +74,16 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
         if section == 0 {
             return 1
         }
-        else {
-            return Latestrecipes.count
+        if searchcon.isActive && searchcon.searchBar.text != "" {
+            return seaarr.count
         }
+        
+        return Latestrecipes.count
         
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 160
+            return 190
         }
         else {
             return 260
@@ -90,32 +102,38 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
             return featuredcell
         }
             
-        else {
         guard let homecell = HomeTable.dequeueReusableCell(withIdentifier: "homecell") as? RecipeCell else {return UITableViewCell()}
-        homecell.updateviews(recipe: Latestrecipes[indexPath.row])
-        return homecell
+        var recip: Recipe!
+        if searchcon.isActive && searchcon.searchBar.text != "" {
+            recip = seaarr[indexPath.row]
         }
+        else {
+            recip = Latestrecipes[indexPath.row]
+        }
+        homecell.updateviews(recipe: recip)
+        return homecell
+        
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerview = HomeTable.dequeueReusableHeaderFooterView(withIdentifier: "header") as? HeaderView
-        if section == 0 {
-            headerview?.HeaderLabel.text = "FEATURED RECIPES"
+        if section == 1 {
+            headerview?.HeaderLabel.text = "LATEST"
+            return headerview
         }
         else {
-            headerview?.HeaderLabel.text = "LATEST"
+            return nil
         }
-        return headerview
+        
+        
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 45
+        if section == 0 {
+            return CGFloat.leastNonzeroMagnitude
+        }
+        return 35
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "openrec", sender: Latestrecipes[indexPath.row])
-        
-//        guard let recopenvc = storyboard?.instantiateViewController(identifier: "recopen") as? RecipeopenVC else { return }
-//        recopenvc.setdata(rec: Latestrecipes[indexPath.row])
-//        present(recopenvc, animated: true, completion: nil)
-        
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let Recopenvc = segue.destination as? RecipeopenVC {
@@ -136,16 +154,28 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollec
         return featuredcollcell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 250, height: 120)
+        return CGSize(width: 300, height: 150)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 20, left: 16, bottom: 20, right: 16)
+        return UIEdgeInsets(top: 15, left: 16, bottom: 15, right: 16)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         performSegue(withIdentifier: "openrec", sender: Featuredrecipes[indexPath.row])
     }
     
-    
+}
+extension HomeVC: UISearchResultsUpdating, UISearchBarDelegate {
+    func updateSearchResults(for searchController: UISearchController) {
+        if let searchedtext = searchController.searchBar.text {
+           seaarr = Latestrecipes.filter { (rec) -> Bool in
+            rec.name.contains(searchedtext)
+            }
+            self.HomeTable.reloadData()
+        }
+    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        navigationItem.searchController = nil
+    }
     
     
 }

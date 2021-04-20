@@ -57,6 +57,7 @@ class LoginVC: UIViewController {
 
 }
 extension LoginVC: UITextFieldDelegate {
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.placeholder = nil
         textField.text = nil

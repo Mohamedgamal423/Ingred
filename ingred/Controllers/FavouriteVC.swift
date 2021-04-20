@@ -7,45 +7,103 @@
 //
 
 import UIKit
+import Firebase
+import Alamofire
+
 
 class FavouriteVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var FavouriteTable: UITableView!
+    var recipesarr = [Recipe]()
+    var seaarr = [Recipe]()
+    var searchcon = UISearchController(searchResultsController: nil)
+    var activity: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         FavouriteTable.delegate = self
         FavouriteTable.dataSource = self
         let cellnib = UINib(nibName: "RecipeCell", bundle: nil)
         FavouriteTable.register(cellnib, forCellReuseIdentifier: "favcell")
-        Alamofire.getrecipes(forcategory: nil) { (completed) in
-            Alamofire.downloadimages { (down) in
-                if down {
-                    
-                }
-            }
-        }
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Search.png"), style: .plain, target: self, action: #selector(opensearchbar))
+        //navigationItem.backBarButtonItem = nil
+        self.navigationItem.leftBarButtonItem = nil
+        navigationItem.backBarButtonItem = UIBarButtonItem(image: UIImage(named: "arrow.png"), style: .plain, target: nil, action: nil)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Search.png"), style: .plain, target: self, action: #selector(presentsearchbar))
         navigationController?.makenavbarinvisible()
         
     }
-    @objc func opensearchbar() {
-        
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        if recipesarr.count == 0 {
+            showactivity()
+        }
+        //showactivity()
+        DataService.instance.getfavrecipes(uid: (Auth.auth().currentUser?.uid)!) { (recipes) in
+            self.recipesarr = recipes
+            self.FavouriteTable.reloadData()
+            self.activity.stopAnimating()
+        }
     }
+    @objc func presentsearchbar() {
+        
+        searchcon.searchResultsUpdater = self
+        searchcon.searchBar.delegate = self
+        searchcon.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController = searchcon
+        searchcon.hidesNavigationBarDuringPresentation = true
+        searchcon.definesPresentationContext = true
+        present(searchcon, animated: true, completion: nil)
+    }
+    func showactivity() {
+        activity = UIActivityIndicatorView(style: .large)
+        activity.center = view.center
+        self.view.addSubview(activity)
+        activity.startAnimating()
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        if searchcon.isActive && searchcon.searchBar.text != "" {
+            return seaarr.count
+        }
+        return recipesarr.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let favcell = FavouriteTable.dequeueReusableCell(withIdentifier: "favcell") else { return UITableViewCell() }
+        guard let favcell = FavouriteTable.dequeueReusableCell(withIdentifier: "favcell") as? RecipeCell else { return UITableViewCell() }
+        var recip: Recipe!
+        if searchcon.isActive && searchcon.searchBar.text != "" {
+            recip = seaarr[indexPath.row]
+        }
+        else {
+            recip = recipesarr[indexPath.row]
+        }
+        favcell.updateviews(recipe: recip)
         return favcell
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 260
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "revop", sender: recipesarr[indexPath.row])
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let Recopenvc = segue.destination as? RecipeopenVC {
+            Recopenvc.setdata(rec: sender as! Recipe)
+        }
+    }
     
-
-   
-
 }
-extension FavouriteVC: UISearchBarDelegate {
+extension FavouriteVC: UISearchResultsUpdating, UISearchBarDelegate {
+    func updateSearchResults(for searchController: UISearchController) {
+        if let searchedtext = searchController.searchBar.text {
+           seaarr = recipesarr.filter { (rec) -> Bool in
+            rec.name.contains(searchedtext)
+            }
+            self.FavouriteTable.reloadData()
+        }
+    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        navigationItem.searchController = nil
+    }
     
 }

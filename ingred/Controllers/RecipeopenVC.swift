@@ -36,24 +36,32 @@ class RecipeopenVC: UIViewController, UITableViewDataSource, UITableViewDelegate
         Recimg.image = recipe?.image
         navigationItem.backBarButtonItem = UIBarButtonItem(image: UIImage(named: "arrow.png"), style: .plain, target: nil, action: nil)
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Heart.png"), style: .plain, target: self, action: #selector(uploadrecipes))
+        navigationController?.navigationBar.tintColor = UIColor.white
+        self.navigationItem.leftBarButtonItem = nil
+        
     }
     @objc func uploadrecipes() {
-        DataService.instance.SaveFavRecipe(recipe: recipe, uid: "trtjykuk555hjy") { (complete) in
-            if complete {
-                print("successfully uploaded recipe")
-            }
-            else {
-                print("error to uploading recipe")
+        
+        let uid = Auth.auth().currentUser?.uid
+        
+        if recipe.recid != nil {
+            DataService.instance.deleterecipe(uid: uid!, recid: recipe.recid)
+        }
+        else {
+            DataService.instance.SaveFavRecipe(recipe: recipe, uid: (Auth.auth().currentUser?.uid)!) { (complete) in
+                if complete {
+                    print("successfully uploaded recipe")
+                }
+                else {
+                    print("error to uploading recipe")
+                }
             }
         }
+        
     }
     func setdata(rec: Recipe) {
         recipe = rec
-        print(recipe.name)
-//        Rectime.text = String(describing: rec.cooktime)
-//        Recname.text = rec.name
-//        Rectime.text = "\(rec.cooktime) minutes"
-//        Recservings.text = "\(rec.servings) people"
+
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {

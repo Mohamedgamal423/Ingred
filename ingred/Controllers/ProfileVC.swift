@@ -11,29 +11,36 @@ import Firebase
 class ProfileVC: UIViewController {
 
     @IBOutlet weak var currentUseremaillbl: UILabel!
+    @IBOutlet weak var userimg: UIImageView!
+    @IBOutlet weak var logout: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.makenavbarinvisible()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "exit.png"), style: .plain, target: self, action: #selector(logoutUser))
+        getemail()
         navigationItem.backBarButtonItem = nil
         navigationItem.leftBarButtonItem = nil
     }
-    @objc func logoutUser() {
+    
+    @IBAction func logoutUser() {
         do {
             try Auth.auth().signOut()
-            presentingViewController?.dismiss(animated: true, completion: nil)
-            
-            
+            //dismiss(animated: true, completion: nil)
         }
         catch {
             debugPrint(error.localizedDescription)
         }
-        
-        
+        dismiss(animated: true, completion: nil)
     }
     
+    func getemail() {
+        if let email = Auth.auth().currentUser?.email {
+            currentUseremaillbl.text = email
+        }
+    }
     
-
-
-
 }
+
+
+
+

@@ -8,8 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		CD241260E24E345615E638AB /* Pods_ingred.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E87B845159C31B412196205 /* Pods_ingred.framework */; };
+		D10D3ED626201F2400DF5E7E /* circleview.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10D3ED526201F2400DF5E7E /* circleview.swift */; };
+		D10D3ED82620364E00DF5E7E /* Circleimg.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10D3ED72620364E00DF5E7E /* Circleimg.swift */; };
+		D1127D932620D5500084912F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1127D922620D5500084912F /* Constants.swift */; };
 		D117085825B8D786009EF647 /* InstructCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D117085725B8D786009EF647 /* InstructCell.swift */; };
 		D119430E25A593A900164188 /* UILabelEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D119430D25A593A900164188 /* UILabelEx.swift */; };
+		D11D8BF72622C8BC007AC1BB /* Recipe2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11D8BF62622C8BC007AC1BB /* Recipe2.swift */; };
+		D11D8BF92622CAC2007AC1BB /* FetchApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11D8BF82622CAC2007AC1BB /* FetchApi.swift */; };
 		D11DE73D25B399D2002CEEFC /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11DE73C25B399D2002CEEFC /* Recipe.swift */; };
 		D11DE73F25B3B1D7002CEEFC /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11DE73E25B3B1D7002CEEFC /* Alamofire.swift */; };
 		D138056325A565F8008C8358 /* UIButtonEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D138056225A565F8008C8358 /* UIButtonEx.swift */; };
@@ -43,6 +48,7 @@
 		D1B863D425B06F9200F722D5 /* FeaturedCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1B863D325B06F9200F722D5 /* FeaturedCollectionCell.xib */; };
 		D1B863D625B0967400F722D5 /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1B863D525B0967300F722D5 /* HeaderView.xib */; };
 		D1B863D825B0976800F722D5 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B863D725B0976800F722D5 /* HeaderView.swift */; };
+		D1BEB0C3262D7AD500092225 /* Roundrectview.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BEB0C2262D7AD500092225 /* Roundrectview.swift */; };
 		D1CF923625A8230A003DD591 /* UINavigationEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CF923525A8230A003DD591 /* UINavigationEx.swift */; };
 		D1E872EF25B79F5000E17C18 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E872EE25B79F5000E17C18 /* Category.swift */; };
 /* End PBXBuildFile section */
@@ -51,8 +57,13 @@
 		3E87B845159C31B412196205 /* Pods_ingred.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ingred.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		71A25CD99612209ABA6E5E7C /* Pods-ingred.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ingred.release.xcconfig"; path = "Target Support Files/Pods-ingred/Pods-ingred.release.xcconfig"; sourceTree = "<group>"; };
 		B2D4CE3DA852362C0CB33DE8 /* Pods-ingred.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ingred.debug.xcconfig"; path = "Target Support Files/Pods-ingred/Pods-ingred.debug.xcconfig"; sourceTree = "<group>"; };
+		D10D3ED526201F2400DF5E7E /* circleview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = circleview.swift; sourceTree = "<group>"; };
+		D10D3ED72620364E00DF5E7E /* Circleimg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circleimg.swift; sourceTree = "<group>"; };
+		D1127D922620D5500084912F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D117085725B8D786009EF647 /* InstructCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructCell.swift; sourceTree = "<group>"; };
 		D119430D25A593A900164188 /* UILabelEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelEx.swift; sourceTree = "<group>"; };
+		D11D8BF62622C8BC007AC1BB /* Recipe2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe2.swift; sourceTree = "<group>"; };
+		D11D8BF82622CAC2007AC1BB /* FetchApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchApi.swift; sourceTree = "<group>"; };
 		D11DE73C25B399D2002CEEFC /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		D11DE73E25B3B1D7002CEEFC /* Alamofire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alamofire.swift; sourceTree = "<group>"; };
 		D138056225A565F8008C8358 /* UIButtonEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonEx.swift; sourceTree = "<group>"; };
@@ -88,6 +99,7 @@
 		D1B863D325B06F9200F722D5 /* FeaturedCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeaturedCollectionCell.xib; sourceTree = "<group>"; };
 		D1B863D525B0967300F722D5 /* HeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
 		D1B863D725B0976800F722D5 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		D1BEB0C2262D7AD500092225 /* Roundrectview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Roundrectview.swift; sourceTree = "<group>"; };
 		D1CF923525A8230A003DD591 /* UINavigationEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationEx.swift; sourceTree = "<group>"; };
 		D1E872EE25B79F5000E17C18 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -117,7 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				D11DE73C25B399D2002CEEFC /* Recipe.swift */,
-				D11DE73E25B3B1D7002CEEFC /* Alamofire.swift */,
+				D11D8BF62622C8BC007AC1BB /* Recipe2.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -147,6 +159,9 @@
 			children = (
 				D143ABC225BE6EBD00BB5255 /* AuthService.swift */,
 				D143ABC425BE6EDD00BB5255 /* DataService.swift */,
+				D11DE73E25B3B1D7002CEEFC /* Alamofire.swift */,
+				D1127D922620D5500084912F /* Constants.swift */,
+				D11D8BF82622CAC2007AC1BB /* FetchApi.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -212,6 +227,9 @@
 				D119430D25A593A900164188 /* UILabelEx.swift */,
 				D1CF923525A8230A003DD591 /* UINavigationEx.swift */,
 				D198240F25AE1AD200E720A1 /* ShadowView.swift */,
+				D10D3ED526201F2400DF5E7E /* circleview.swift */,
+				D10D3ED72620364E00DF5E7E /* Circleimg.swift */,
+				D1BEB0C2262D7AD500092225 /* Roundrectview.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -351,6 +369,7 @@
 				D1B816CB25A8ADBE00E18A8C /* HomeVC.swift in Sources */,
 				D14D2399259ECF7100684D24 /* SignloginVC.swift in Sources */,
 				D13E6A4B25AD982300C725ED /* RecipeCell.swift in Sources */,
+				D1127D932620D5500084912F /* Constants.swift in Sources */,
 				D1A1A83325B609DD002202AE /* RecipeopenVC.swift in Sources */,
 				D138056525A57848008C8358 /* UITextfieldEx.swift in Sources */,
 				D143ABC525BE6EDD00BB5255 /* DataService.swift in Sources */,
@@ -358,17 +377,22 @@
 				D1A1A83925B60FFA002202AE /* CategoryopenCell.swift in Sources */,
 				D1CF923625A8230A003DD591 /* UINavigationEx.swift in Sources */,
 				D14D2395259ECF7100684D24 /* AppDelegate.swift in Sources */,
+				D10D3ED82620364E00DF5E7E /* Circleimg.swift in Sources */,
+				D11D8BF72622C8BC007AC1BB /* Recipe2.swift in Sources */,
 				D1B816CF25A8AE1A00E18A8C /* CategoryVC.swift in Sources */,
 				D1B863D225B06F6D00F722D5 /* FeaturedCollectionCell.swift in Sources */,
 				D1A1A83525B60E9D002202AE /* CategoriesCell.swift in Sources */,
 				D14D2397259ECF7100684D24 /* SceneDelegate.swift in Sources */,
 				D198241025AE1AD200E720A1 /* ShadowView.swift in Sources */,
 				D1B816D125A8AE7500E18A8C /* ProfileVC.swift in Sources */,
+				D10D3ED626201F2400DF5E7E /* circleview.swift in Sources */,
 				D1A1A83725B60F3D002202AE /* IngredCell.swift in Sources */,
+				D11D8BF92622CAC2007AC1BB /* FetchApi.swift in Sources */,
 				D1B816CD25A8ADE600E18A8C /* FavouriteVC.swift in Sources */,
 				D119430E25A593A900164188 /* UILabelEx.swift in Sources */,
 				D1B863CC25B0664800F722D5 /* FeaturedCell.swift in Sources */,
 				D1E872EF25B79F5000E17C18 /* Category.swift in Sources */,
+				D1BEB0C3262D7AD500092225 /* Roundrectview.swift in Sources */,
 				D11DE73D25B399D2002CEEFC /* Recipe.swift in Sources */,
 				D138056325A565F8008C8358 /* UIButtonEx.swift in Sources */,
 				D1AFF5EE25A2DA9C00894738 /* LoginVC.swift in Sources */,

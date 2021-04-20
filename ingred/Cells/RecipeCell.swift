@@ -15,18 +15,22 @@ class RecipeCell: UITableViewCell {
     @IBOutlet weak var Recname: UILabel!
     @IBOutlet weak var Rectime: UILabel!
     @IBOutlet weak var Recservings: UILabel!
+    @IBOutlet weak var view: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         self.selectionStyle = .none
+        Recimage.layer.cornerRadius = 20
+        Recimage.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
 
     func updateviews(recipe: Recipe) {
         self.Recimage.image = recipe.image
-        self.Categorylbl.text = "Food"
+        self.Categorylbl.text = recipe.dishtypes.randomElement()
         self.Recname.text = recipe.name
-        self.Rectime.text = String(describing: recipe.cooktime)
+        self.Rectime.text = "\(recipe.cooktime) minutes"
         self.Recservings.text = String(describing: recipe.servings)
+        
     }
 
 }

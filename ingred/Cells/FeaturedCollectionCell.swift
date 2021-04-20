@@ -14,5 +14,6 @@ class FeaturedCollectionCell: UICollectionViewCell {
     
     func updateviews(recipe: Recipe) {
         self.recimg.image = recipe.image
+        recimg.layer.cornerRadius = 16
     }
 }

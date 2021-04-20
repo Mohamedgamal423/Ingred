@@ -11,14 +11,18 @@ import UIKit
 class CategoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var Categorytable: UITableView!
-    private let categories = [Category(name: "Appetizer", imagename: "rt.jpg"),
-                              Category(name: "Breakfast and Brunch", imagename: "rt.jpg"),
-                              Category(name: "Dessert", imagename: "rt.jpg"),
-                              Category(name: "Beverages", imagename: "rt.jpg"),
-                              Category(name: "Main Dish", imagename: "rt.jpg"),
-                              Category(name: "Pasta", imagename: "rt.jpg"),
-                              Category(name: "Salad", imagename: "rt.jpg"),
-                              Category(name: "Soup", imagename: "rt.jpg")]
+    var activity: UIActivityIndicatorView!
+    
+    private let categories = [Category(name: "Appetizer", imagename: "app"),
+                              Category(name: "Breakfast", imagename: "break"),
+                              Category(name: "Dessert", imagename: "dess"),
+                              Category(name: "Beverages", imagename: "bev"),
+                              Category(name: "Main Dish", imagename: "m1"),
+                              Category(name: "Pasta", imagename: "p2"),
+                              Category(name: "Salad", imagename: "s1"),
+                              Category(name: "Soup", imagename: "so3")]
+    var selectedCat: Category!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         Categorytable.delegate = self
@@ -26,8 +30,13 @@ class CategoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.navigationItem.leftBarButtonItem = nil
         navigationItem.backBarButtonItem = UIBarButtonItem(image: UIImage(named: "arrow.png"), style: .plain, target: nil, action: nil)
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Search.png"), style: .plain, target: nil, action: nil)
-        
+        showactivity()
         navigationController?.makenavbarinvisible()
+    }
+    func showactivity() {
+        activity = UIActivityIndicatorView(style: .large)
+        activity.center = view.center
+        self.view.addSubview(activity)
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return categories.count
@@ -41,21 +50,26 @@ class CategoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return 150
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Alamofire.getrecipes(forcategory: categories[indexPath.row].name) { (getted) in
-            if getted {
-                Alamofire.downloadimages { (downloaded) in
-                    if downloaded {
-                        Alamofire.addimagestorecip()
-                        self.performSegue(withIdentifier: "catopenseg", sender: Alamofire.RecipesArr)
-                    }
-                }
-            }
+        activity.startAnimating()
+        selectedCat = categories[indexPath.row]
+        Alamofirec.getrecipes(forcategory: selectedCat.name) { (recipes) in
+            self.performSegue(withIdentifier: "catopenseg", sender: recipes)
+            self.activity.stopAnimating()
         }
+//        FetchApi.instance.getrecipes(forcategory: selectedCat.name) { (comp) in
+//            if comp {
+//                FetchApi.instance.downloadimages { (don) in
+//                    if don {
+//                        FetchApi.instance.addimagestorecip()
+//                        self.performSegue(withIdentifier: "catopenseg", sender: FetchApi.instance.RecipesArr)
+//                    }
+//                }
+//            }
+//        }
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let catopenvc = segue.destination as? CategoryopenVC {
-            catopenvc.Setdata(recipesarr: sender as! [Recipe])
-            
+            catopenvc.Setdata(recipesarr: sender as! [Recipe], cat: selectedCat)
         }
         
     }
